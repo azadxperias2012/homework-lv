@@ -16,10 +16,16 @@ public class Loan {
     @JoinColumn(name = "USER_ID")
     User user;
 
+    LoanStatus status;
+
+    public Loan() {
+    }
+
     public Loan(Double amount, Integer term, User user) {
         this.amount = amount;
         this.term = term;
         this.user = user;
+        this.status = LoanStatus.APPROVED;
     }
 
     public Long getId() {
@@ -54,6 +60,14 @@ public class Loan {
         this.user = user;
     }
 
+    public LoanStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(LoanStatus status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Loan{" +
@@ -61,7 +75,7 @@ public class Loan {
                 ", amount=" + amount +
                 ", term=" + term +
                 ", user=" + user +
+                ", status=" + status +
                 '}';
     }
-
 }

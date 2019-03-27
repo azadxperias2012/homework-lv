@@ -22,8 +22,9 @@ public class LoanApplicationController {
     LoanRepository loanRepository;
 
     @RequestMapping(value = "loans", method = RequestMethod.GET)
-    public List<String> loanList(@PathVariable Long id) {
-        return Arrays.asList("Car Loan", "Personal Loan");
+    public List<Loan> loanList(@PathVariable Long id) {
+        //return Arrays.asList("Car Loan", "Personal Loan");
+        return loanRepository.findLoansByUser(id);
     }
 
     @RequestMapping(value = "loans", method = RequestMethod.POST)
