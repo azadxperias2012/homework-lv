@@ -18,6 +18,7 @@ public class Loan {
     User user;
 
     LoanStatus status;
+    Boolean extended;
 
     public Loan() {
     }
@@ -32,6 +33,7 @@ public class Loan {
         this.term = term;
         this.interestRatePerWeek = interestRatePerWeek;
         this.status = loanStatus;
+        this.extended = Boolean.FALSE;
     }
 
     public Long getId() {
@@ -80,6 +82,14 @@ public class Loan {
 
     public void setInterestRatePerWeek(Double interestRatePerWeek) {
         this.interestRatePerWeek = interestRatePerWeek;
+    }
+
+    public Boolean getExtended() {
+        return extended;
+    }
+
+    public void setExtended(Boolean extended) {
+        this.extended = extended;
     }
 
     @Override

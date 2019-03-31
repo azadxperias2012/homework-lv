@@ -2,11 +2,9 @@ package io.fourfinanceit.controller;
 
 import io.fourfinanceit.model.Loan;
 import io.fourfinanceit.model.User;
-import io.fourfinanceit.repository.LoanRepository;
 import io.fourfinanceit.repository.UserRepository;
 import io.fourfinanceit.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -18,7 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
