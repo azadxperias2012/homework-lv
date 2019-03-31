@@ -23,7 +23,25 @@
 - How simple it is to run the application (embedded DB/embedded container)
 
 #Project Details
-##Micro Lending REST API: 
+##Micro Lending REST API:
+###Application Home
+#### http://localhost:8080
+- Request Type: **GET**
+- Response Status: **20o0 - OK**
+- Response Body:
+    -     {
+              "message": "Welcome to Micro lend API",
+              "_links": {
+                  "all-users": {
+                      "href": "http://localhost:8080/api/v1/users"
+                  },
+                  "self": {
+                      "href": "http://localhost:8080/"
+                  }
+              }
+          }
+- Navigate through the **HATEOAS** links to access the application
+
 ###User Creation
 #### http://localhost:8080/api/v1/users
 - Request Type: **POST**
@@ -78,8 +96,7 @@
 #### http://localhost:8080/api/v1/users/1/loans/1/extend?term=1
  - Request Type: **POST**
  - Request Body: form-data (**JSON** - application/json)
-     -     amount: 1500
-           term: 3
+     -     term: 1
  - Response Status: **202 - ACCEPTED**
  - Response Body:
      -     {
