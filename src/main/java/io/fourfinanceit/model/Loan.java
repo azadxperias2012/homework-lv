@@ -11,6 +11,7 @@ public class Loan {
 
     Double amount;
     Integer term;
+    Double interestRatePerWeek;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
@@ -21,11 +22,16 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(Double amount, Integer term, User user) {
+    public Loan(User user, Double amount, Integer term, Double interestRatePerWeek) {
+        this(user, amount, term, interestRatePerWeek, LoanStatus.APPROVED);
+    }
+
+    public Loan(User user, Double amount, Integer term, Double interestRatePerWeek, LoanStatus loanStatus) {
+        this.user = user;
         this.amount = amount;
         this.term = term;
-        this.user = user;
-        this.status = LoanStatus.APPROVED;
+        this.interestRatePerWeek = interestRatePerWeek;
+        this.status = loanStatus;
     }
 
     public Long getId() {
@@ -68,12 +74,21 @@ public class Loan {
         this.status = status;
     }
 
+    public Double getInterestRatePerWeek() {
+        return interestRatePerWeek;
+    }
+
+    public void setInterestRatePerWeek(Double interestRatePerWeek) {
+        this.interestRatePerWeek = interestRatePerWeek;
+    }
+
     @Override
     public String toString() {
         return "Loan{" +
                 "id=" + id +
                 ", amount=" + amount +
                 ", term=" + term +
+                ", interestRatePerWeek=" + interestRatePerWeek +
                 ", user=" + user +
                 ", status=" + status +
                 '}';

@@ -3,13 +3,15 @@ package io.fourfinanceit.controller;
 import io.fourfinanceit.model.User;
 import io.fourfinanceit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.*;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 import static org.springframework.hateoas.MediaTypes.HAL_JSON_VALUE;
@@ -26,7 +28,11 @@ public class UserController {
     @RequestMapping(value = "users", method = RequestMethod.POST)
     public HttpEntity<Resource<User>> create(@RequestBody User user) {
         User newUser = userRepository.saveAndFlush(user);
-        return new ResponseEntity<>(getUserResource(newUser), HttpStatus.CREATED);
+        final URI uri = MvcUriComponentsBuilder.fromController(this.getClass())
+                .path("/{id}")
+                .buildAndExpand(newUser.getId())
+                .toUri();
+        return ResponseEntity.created(uri).body(getUserResource(user));
     }
 
     @RequestMapping(value = "users", method = RequestMethod.GET)
@@ -51,7 +57,7 @@ public class UserController {
     private Resource<User> getUserResource(User user) {
         Resource<User> userResource = new Resource<>(user);
         userResource.add(linkTo(methodOn(this.getClass()).getUserById(user.getId())).withSelfRel());
-        userResource.add(linkTo(methodOn(LoanApplicationController.class).loanList(user.getId()))
+        userResource.add(linkTo(methodOn(LoanApplicationController.class).loans(user.getId()))
                 .withRel("loans"));
         return userResource;
     }
