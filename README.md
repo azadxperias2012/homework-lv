@@ -1,4 +1,4 @@
-#homework-lv
+#homework-lv - See [Project Details](#project-details)
 
 ##Goal
 - Create a simple micro-lending rest api app similar to one of our existing products.
@@ -21,3 +21,82 @@
 - Requirements are met
 - Code quality (both production and test)
 - How simple it is to run the application (embedded DB/embedded container)
+
+#Project Details
+##Micro Lending REST API: 
+###User Creation
+#### http://localhost:8080/api/v1/users
+- Request Type: **POST**
+- Request Body: raw (**JSON** - application/json)
+    -     {
+            "firstName": "Eden",
+            "lastName": "Hazard"
+          }
+- Response Status: **201 - CREATED**
+- Response Body:
+    -     {
+            "id": 1,
+            "firstName": "Eden",  
+            "lastName": "Hazard",  
+            "_links": {  
+              "self": {  
+                  "href": "http://localhost:8080/api/v1/users/1"  
+              },  
+              "loans": {  
+                  "href": "http://localhost:8080/api/v1/users/1/loans"  
+              }  
+            }  
+          }
+ 
+ ###Loan Creation and extending loans
+ #### http://localhost:8080/api/v1/users/1/loans?amount=1500&term=3
+ - Request Type: **POST**
+ - Request Body: form-data (**JSON** - application/json)
+     -     amount: 1500
+           term: 3
+ - Response Status: **201 - CREATED**
+ - Response Body:
+     -     {
+             "id": 1,
+             "amount": 1500,
+             "term": 3,
+             "interestRatePerWeek": 0.12,
+             "user": {
+                 "id": 1,
+                 "firstName": "Eden",
+                 "lastName": "Hazard"
+               },
+             "status": "APPROVED",
+             "extended": false,
+             "_links": {
+                 "self": {
+                     "href": "http://localhost:8080/api/v1/users/1/loans/1"
+                 }
+             }
+           }
+###Loan extension
+#### http://localhost:8080/api/v1/users/1/loans/1/extend?term=1
+ - Request Type: **POST**
+ - Request Body: form-data (**JSON** - application/json)
+     -     amount: 1500
+           term: 3
+ - Response Status: **202 - ACCEPTED**
+ - Response Body:
+     -     {
+             "id": 1,
+             "amount": 1500,
+             "term": 3,
+             "interestRatePerWeek": 0.18,
+             "user": {
+                 "id": 1,
+                 "firstName": "Eden",
+                 "lastName": "Hazard"
+               },
+             "status": "APPROVED",
+             "extended": true,
+             "_links": {
+                 "self": {
+                     "href": "http://localhost:8080/api/v1/users/1/loans/1"
+                 }
+             }
+           }
