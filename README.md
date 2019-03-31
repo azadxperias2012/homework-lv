@@ -1,9 +1,9 @@
-#homework-lv - See [Project Details](#project-details)
+# homework-lv - See [Project Details](#project-details)
 
-##Goal
+## Goal
 - Create a simple micro-lending rest api app similar to one of our existing products.
 
-##Business requirements
+## Business requirements
 - Applying for loan through the api - passing term and amount.
 - Loan application risk analysis performed if:
   - the attempt to take loan is made after 00:00 with max possible amount.
@@ -11,20 +11,20 @@
 - Loan can be extended, interest factor per week is 1.5.
 - User can view their loans, including extensions.
 
-##Technical requirements
+## Technical requirements
 - Backend in Java, XML-less Spring, Hibernate.
 - Code quality (both production and test)
 - How simple it is to run the application (embedded DB/embedded container)
 - Use of spring-boot provided in this template is not obligatory, you are free to choose any other framework.
 
-##What gets evaluated
+## What gets evaluated
 - Requirements are met
 - Code quality (both production and test)
 - How simple it is to run the application (embedded DB/embedded container)
 
-#Project Details
-##Micro Lending REST API:
-###Application Home
+# Project Details
+## Micro Lending REST API:
+### Application Home
 #### http://localhost:8080
 - Request Type: **GET**
 - Response Status: **20o0 - OK**
@@ -42,7 +42,7 @@
           }
 - Navigate through the **HATEOAS** links to access the application
 
-###User Creation
+### User Creation
 #### http://localhost:8080/api/v1/users
 - Request Type: **POST**
 - Request Body: raw (**JSON** - application/json)
@@ -66,7 +66,7 @@
             }  
           }
  
- ###Loan Creation and extending loans
+ ### Loan Creation and extending loans
  #### http://localhost:8080/api/v1/users/1/loans?amount=1500&term=3
  - Request Type: **POST**
  - Request Body: form-data (**JSON** - application/json)
@@ -92,7 +92,7 @@
                  }
              }
            }
-###Loan extension
+### Loan extension
 #### http://localhost:8080/api/v1/users/1/loans/1/extend?term=1
  - Request Type: **POST**
  - Request Body: form-data (**JSON** - application/json)
