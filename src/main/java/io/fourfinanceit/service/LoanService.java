@@ -11,16 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class LoanService {
 
     private static final Double NUMBER_OF_WEEKS = 52.18;
+    private static final Double ROUND_OFF_MULTIPLIER = 100.00;
 
     @Autowired
     LoanRepository loanRepository;
@@ -30,18 +27,6 @@ public class LoanService {
 
     @Autowired
     RiskValidator riskValidator;
-
-    @Value("${night.time.start}")
-    private String nightStartTime;
-
-    @Value("${night.time.end}")
-    private String nightEndTime;
-
-    @Value("${loan.amount.minimum}")
-    private Double minimumLoanAmount;
-
-    @Value("${loan.amount.maximum}")
-    private Double maximumLoanAmount;
 
     @Value("${loan.application.max.count.per.ip}")
     private Integer loanApplicationMaxCountPerIp;
@@ -53,21 +38,13 @@ public class LoanService {
     private Double interestRateExtensionFactor;
 
     private double interestRatePerWeek;
-    private ConcurrentHashMap<String, Queue<Long>> ipAndApplicationsPerDayMap;
-    private LocalTime nightStartLocalTime;
-    private LocalTime nightEndLocalTime;
 
     public LoanService() {
-        ipAndApplicationsPerDayMap = new ConcurrentHashMap<>();
     }
 
     @PostConstruct
     public void init() {
         interestRatePerWeek = calculateRoundedInterestRate((interestRate / NUMBER_OF_WEEKS));
-
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        nightStartLocalTime = LocalTime.parse(nightStartTime, timeFormatter);
-        nightEndLocalTime = LocalTime.parse(nightEndTime, timeFormatter);
     }
 
     public List<Loan> findLoansByUser(Long id) {
@@ -107,6 +84,6 @@ public class LoanService {
     }
 
     private Double calculateRoundedInterestRate(double interestRate) {
-        return Math.round(interestRate * 100.00) / 100.00;
+        return Math.round(interestRate * ROUND_OFF_MULTIPLIER) / ROUND_OFF_MULTIPLIER;
     }
 }
